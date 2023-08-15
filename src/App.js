@@ -7,7 +7,7 @@ import ActionRow from "./components/ActionRow";
 const App = () => {
     const [time, setTime] = useState({minutes: 25, seconds: 0});
     const [timer, setTimer] = useState(null);
-    const [isWorkMode, setIsWorkMode] = useState(true);
+    const [mode, setMode] = useState("work");
     const [isActive, setIsActive] = useState(false);
 
     const start = () => {
@@ -25,22 +25,21 @@ const App = () => {
         }
     };
 
-    const reset = () => {
+    const reset = (mode) => {
         pause();
-        const initialMinutes = isWorkMode ? 25 : 5;
-        setTime({minutes: initialMinutes, seconds: 0});
+        const initialMinutes = mode === "work" ? 25 : 5;
+        setTime({ minutes: initialMinutes, seconds: 0 });
     };
 
     const finished = () => {
         pause();
-        setIsWorkMode(!isWorkMode);
+        setMode(!mode);
         reset();
     };
 
     const changeMode = (mode) => {
-        console.log("Changing mode:", mode);
-        setIsWorkMode(mode === "work");
-        reset();
+        setMode(mode);
+        reset(mode);
     };
 
     const tick = () => {
